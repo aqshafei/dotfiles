@@ -34,7 +34,7 @@ Spell check is enabled for Markdown, Txt, Org , and Latex files. Org mode is ena
 * `init.lua` is the main neovim lua init config file
 * `lua/keymaps.lua` all the additional keymaps
 * `lua/plugins.lua` Packer Plugin manager configs and plugins installation  
-* `plugins\` all the configs for each plugins lives here
+* `plugins/` all the configs for each plugins lives here
 ```
 .
 ├── init.lua
