@@ -28,39 +28,21 @@ Ctrl+\ to Open a Horizental Terminal
 Normal Mode Keybindings:
 
 Ctrl+o to toggle nvim-tree
-Ctrl+p to Open Telescope
 GD to show declaration
 Gd to show definition
 Gi to show implementation
 Gr to show references
 K to hover
-C-k to show signature help0
+C-k to show signature help
 Alt-Enter to show code action
 ]]
 
-local builtin = require('telescope.builtin')
 local def_opt = { noremap = true, silent = true }
 
 -- Ctrl+o to toggle nvim-tree
 vim.keymap.set('n', "<C-o>", ":NvimTreeToggle<CR>", def_opt)
 
--- Ctrl+p to Open Telescope
-vim.keymap.set('n', "<C-p>", builtin.find_files, def_opt)
-
--- Ctrl+\ to Open a Horizental Terminal
--- vim.keymap.set("n", "<C-\\>", function() 
---     vim.api.nvim_command("botright 20sp | terminal")
---     vim.api.nvim_command("vertical resize 10")
--- end, def_opt)
-
--- Setup LSP keybindings
-
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
--- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, def_opt)
--- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, def_opt)
--- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, def_opt)
--- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, def_opt)
-
+-- LSP keybindings
 vim.keymap.set({'n', 'v'}, "<A-Enter>", "<cmd>Lspsaga code_action<CR>", def_buf_opt)
 vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, def_buf_opt)
 vim.keymap.set('n', 'gd', "<cmd>Lspsaga peek_definition<CR>", def_buf_opt)
@@ -68,3 +50,18 @@ vim.keymap.set('n', 'gr', "<cmd>Lspsaga rename<CR>", def_buf_opt)
 vim.keymap.set('n', 'gh', "<cmd>Lspsaga lsp_finder<CR>", def_buf_opt)
 vim.keymap.set('n', 'K', "<cmd>Lspsaga hover_doc<CR>", def_buf_opt)
 vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, def_buf_opt)
+
+-- Telescope keybindings
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+-- Troble.nvim keybindings
+vim.keymap.set("n", "<leader>xx", function() require("trouble").open() end)
+vim.keymap.set("n", "<leader>xw", function() require("trouble").open("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>xd", function() require("trouble").open("document_diagnostics") end)
+vim.keymap.set("n", "<leader>xq", function() require("trouble").open("quickfix") end)
+vim.keymap.set("n", "<leader>xl", function() require("trouble").open("loclist") end)
+vim.keymap.set("n", "gR", function() require("trouble").open("lsp_references") end)

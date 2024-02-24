@@ -23,54 +23,197 @@ under the License.
 
 ]]
 
+-- Configure Mason
+require("mason").setup()
+require("mason-lspconfig").setup {
+    ensure_installed = {
+        "neocmake",
+        "clangd",
+        "pyright",
+        "tsserver",
+        "gopls",
+        "rust_analyzer",
+        "lua_ls", 
+        "sqlls",
+        "bashls",
+        "arduino_language_server",
+        "unocss",
+        "dockerls",
+        "prosemd_lsp",
+        "ruff_lsp",
+        "taplo",
+        "lemminx",
+        "yamlls",
+        "texlab",
+        "kotlin_language_server",
+        "gradle_ls",
+    },
+}
+
+-- Configure Neodev
+require("neodev").setup({
+    library = {
+        enabled = true, 
+        runtime = true, 
+        types = true, 
+        plugins = true, 
+      },
+      setup_jsonls = true, 
+      override = function(root_dir, options) end,
+      lspconfig = true,
+      pathStrict = true,
+})
+
+
+-- Configure Lspconfig
+local lspconfig = require("lspconfig")
 
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local lspconfig = require('lspconfig')
-
 local lsp_flags = {
-    -- This is the default in Nvim 0.7+
     -- debounce_text_changes = 150,
+    Lua = {
+      completion = {
+        callSnippet = "Replace"
+      }
+  }
 }
 
 -- CMake LSP
-require('lspconfig')['cmake'].setup {
+require('lspconfig')["neocmake"].setup {
     on_attach = on_attach,
     capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- Bash LSP
+require("lspconfig")["bashls"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
 }
 
 -- Clangd LSP
-require('lspconfig')['clangd'].setup {
+require('lspconfig')["clangd"].setup {
     on_attach = on_attach,
     capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- Docker LSP
+require("lspconfig")["dockerls"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- Markdown LSP
+require("lspconfig")["prosemd_lsp"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- TOML LSP
+require("lspconfig")["taplo"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- XML LSP
+require("lspconfig")["lemminx"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- YAML LSP
+require("lspconfig")["yamlls"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- LaTex LSP
+require("lspconfig")["texlab"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- Kotlin LSP
+require("lspconfig")["kotlin_language_server"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- Gradle LSP
+require("lspconfig")["gradle_ls"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
 }
 
 -- Python LSP
-require('lspconfig')['pyright'].setup {
+require('lspconfig')["ruff_lsp"].setup {
+    on_attach = function(client, bufnr) client.server_capabilities.hoverProvider = false end,
+    capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+require('lspconfig')["pyright"].setup {
     on_attach = on_attach,
     capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- Arduino LSP
+require("lspconfig")["arduino_language_server"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
 }
 
 -- Typescript LSP
-require('lspconfig')['tsserver'].setup {
+require('lspconfig')["tsserver"].setup {
     on_attach = on_attach,
     capabilities = capabilities,
+    settings = lsp_flags,
+}
+
+-- CSS LSP
+require("lspconfig")["unocss"].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
 }
 
 -- Golang LSP
-require('lspconfig')['gopls'].setup {
+require("lspconfig")["gopls"].setup {
     on_attach = on_attach,
     capabilities = capabilities,
+    settings = lsp_flags,
 }
 
 -- Rust LSP
-require('lspconfig')['rust_analyzer'].setup {
+require("lspconfig")["rust_analyzer"].setup {
     on_attach = on_attach,
     capabilities = capabilities,
 
     -- Server-specific settings...
     settings = {
-      ["rust-analyzer"] = {}
+      ["rust-analyzer"] = {},
+      lsp_flags,
     }
+}
+
+-- SQL LSP
+
+require('lspconfig')["sqlls"].setup { 
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = lsp_flags,
 }

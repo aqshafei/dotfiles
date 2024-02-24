@@ -19,8 +19,7 @@ under the License.
 
 @author Aqeel AlShafei
 @data November 20 2022
-@modified November 20 2022
-
+@modified February 24 2024
 
 Current Keymap
 crtl+o to toggle nerdtree
@@ -71,6 +70,6 @@ vim.cmd([[
 ]])
 
 -- Load plugins
-require('plugins')
+require("plugins")
 -- Load Keymaps
-require('keymaps')
+require("keymaps")
